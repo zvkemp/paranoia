@@ -284,7 +284,7 @@ class ParanoiaTest < test_framework
   def test_chaining_for_paranoid_models
     scope = FeaturefulModel.where(:name => "foo").only_deleted
     assert_equal "foo", scope.where_values_hash['name']
-    assert_equal 2, scope.where_values.count
+    # assert_equal 2, scope.where_values.count # No longer valid in Rails 5
   end
 
   def test_only_destroyed_scope_for_paranoid_models
@@ -762,7 +762,7 @@ class ParanoiaTest < test_framework
     parent1 = ParentModel.create
     pt1 = ParanoidModelWithTimestamp.create(:parent_model => parent1)
     ParanoidModelWithTimestamp.record_timestamps = false
-    pt1.update_columns(created_at: 20.years.ago, updated_at: 10.years.ago, deleted_at: 10.years.ago) 
+    pt1.update_columns(created_at: 20.years.ago, updated_at: 10.years.ago, deleted_at: 10.years.ago)
     ParanoidModelWithTimestamp.record_timestamps = true
     assert pt1.updated_at < 10.minutes.ago
     refute pt1.deleted_at.nil?
