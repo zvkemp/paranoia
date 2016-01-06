@@ -56,8 +56,8 @@ setup!
 
 class ParanoiaTest < test_framework
   def setup
-    ActiveRecord::Base.connection.tables.each do |table|
-      ActiveRecord::Base.connection.execute "DELETE FROM #{table}"
+    ActiveRecord::Base.connection.data_sources.each do |source|
+      ActiveRecord::Base.connection.execute "DELETE FROM #{source}"
     end
   end
 
